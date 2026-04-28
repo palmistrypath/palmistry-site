@@ -78,6 +78,50 @@ Articles are written as Markdown files inside the appropriate skill-level subfol
 
 ---
 
+## Branding
+
+| Property | Value |
+|---|---|
+| Site name | Palmistry Path |
+| Tagline | "Read the lines. Discover the path." |
+| Domain | palmistrypath.com |
+| Aesthetic | Mystical and atmospheric — esoteric, evocative, ancient-arts feel |
+| Tone | Educational and respectful; grounded and informative, not mystical hype |
+
+**Colour palette (dark theme — candlelit/occult mood):**
+
+| CSS variable | Hex | Role |
+|---|---|---|
+| `--color-bg` | `#0d0a1a` | Page background — deep midnight indigo |
+| `--color-header-bg` | `#08060f` | Header & footer — fractionally darker, blends with bg |
+| `--color-text` | `#e2d9c5` | Body text — warm cream (14:1 contrast) |
+| `--color-heading` | `#e8e0d0` | Heading text — slightly brighter warm cream |
+| `--accent` | `#c9a96e` | Primary gold — links, active nav, decorative elements |
+| `--accent-light` | `#e0c07e` | Gold hover state |
+| `--color-text-muted` | `#8c84a8` | Muted text — dates, captions (5.8:1 contrast) |
+| `--color-nav-text` | `#c9b99a` | Nav links — warm off-white gold |
+| `--color-nav-hover` | `#c9a96e` | Active / hover nav |
+
+**Fonts (Google Fonts, loaded via Astro's font provider):**
+
+| Role | Font | CSS variable |
+|---|---|---|
+| Headings | Cinzel | `--font-cinzel` |
+| Body | Lora | `--font-lora` |
+
+---
+
+## Page Structure
+
+| Page | Path | Notes |
+|---|---|---|
+| Home | `/` | Hero + intro copy |
+| Blog | `/blog` | Article listing |
+| About | `/about` | 2-paragraph project stub |
+| Glossary | `/glossary` | Alphabetical term reference (stub) |
+
+---
+
 ## Working Agreement with the User
 
 The user is new to web development. Claude Code should:

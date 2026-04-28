@@ -1,0 +1,30 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`Glossary — ${SITE_TITLE}`}
+			description="A reference glossary of palmistry terms drawn from Indian, Chinese, and Western traditions."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Glossary</h1>
+			<p>
+				This glossary is a reference guide to the terminology used in palmistry across Indian,
+				Chinese, and Western traditions. Each entry identifies the source tradition where relevant,
+				and notes where different traditions use different names or meanings for the same feature.
+				Terms are arranged alphabetically.
+			</p>
+			<p><em>Terms will be added progressively as content develops across the site.</em></p>
+		</main>
+		<Footer />
+	</body>
+</html>
