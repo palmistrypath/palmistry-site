@@ -122,6 +122,86 @@ Articles are written as Markdown files inside the appropriate skill-level subfol
 
 ---
 
+## Product Vision
+
+### What Palmistry Path Is
+
+Palmistry Path is an **educational learning platform** that teaches palmistry as a structured, observational, and interpretive practice. It is grounded in established traditions — Indian (Hasta Samudrika Shastra), Chinese palmistry, and Western palmistry (especially Cheiro's system) — and presents the subject with intellectual honesty.
+
+It is **not** a fortune-telling service. Content should consistently reflect that palmistry is a system of pattern recognition, cultural history, and self-reflection — not a predictive science or magical art.
+
+---
+
+### Tone Principles
+
+- **Educational** — structured, clear, progressively deeper
+- **Grounded** — rooted in tradition and source material, not invention
+- **Curious** — treats the subject with genuine interest, not ironic detachment
+- **Respectful** — honours the cultural origins of each tradition
+- **Atmospheric** — the site's mood is mystical, but the writing is not woo-woo or salesy
+
+---
+
+### Phrasing Guidelines
+
+These apply to all content written for or generated on behalf of this site:
+
+| Instead of… | Use… |
+|---|---|
+| "this line means…" | "traditionally associated with…" |
+| "this indicates…" | "often interpreted as…" |
+| "this shows that…" | "may suggest…" |
+
+Additional rules:
+- Always note when traditions disagree on the meaning of a feature
+- Never claim palmistry predicts the future
+- Never suggest palmistry replaces professional medical, legal, or financial advice
+
+---
+
+### Eventual Product Features (Long-Term Roadmap — Do Not Build Yet)
+
+These are directions, not current tasks. Nothing here should be built until the content base justifies it.
+
+- Lesson library organised by category and difficulty level
+- Interactive hand map with clickable regions linked to lessons
+- Practice and interpretation exercises — **not** multiple-choice quizzes (palmistry has no single correct answers; exercises should develop observational skill)
+- Glossary cross-linked from lesson content
+- Reading journal for users to save personal observations
+- Progress tracking across lessons
+- Possible future membership tier
+
+---
+
+### Build Philosophy
+
+The site evolves in phases:
+
+1. **Content first** — build a trustworthy, well-structured body of articles
+2. **Structure second** — organise content into a coherent learning path
+3. **Interactivity third** — add exercises, maps, and cross-linking once the content supports them
+4. **Accounts and membership last** — only when there is something worth gating
+
+Do not add features without earned content underneath them.
+
+---
+
+### Things Explicitly NOT To Do (Until Much Later, If Ever)
+
+- Do not add a pricing or membership page until there is something to sell
+- Do not add multiple-choice quizzes with "correct" answers
+- Do not add user accounts or authentication until the content base justifies it
+- Do not add fake testimonials, fake user counts, or unearned social proof
+- Do not make claims about palmistry's predictive accuracy
+
+---
+
+### Disclaimer (To Add to Footer or About Page in a Future Session)
+
+> *Palmistry Path is for education, personal reflection, and exploration of a centuries-old interpretive tradition. It is not a substitute for professional medical, legal, or financial advice.*
+
+---
+
 ## Working Agreement with the User
 
 The user is new to web development. Claude Code should:
