@@ -55,12 +55,46 @@ import HeaderLink from './HeaderLink.astro';
 	nav a:hover {
 		color: var(--color-nav-hover);
 	}
+
+	/* Tablet: tighten horizontal padding */
 	@media (max-width: 720px) {
 		header {
 			padding: 0 1em;
 		}
+	}
+
+	/* Phone: stack site name above nav links */
+	@media (max-width: 600px) {
+		header {
+			padding: 0;
+		}
+		nav {
+			flex-direction: column;
+			align-items: center;
+			gap: 0;
+			padding: 0.8em 1em 0;
+		}
 		h2 {
-			font-size: 0.9em;
+			font-size: 0.95em;
+		}
+		/* Title link keeps its own tight padding — it's not a tap target */
+		h2 a {
+			padding: 0 0 0.6em;
+			display: block;
+		}
+		.internal-links {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			width: 100%;
+			border-top: 1px solid rgba(201, 169, 110, 0.08);
+		}
+		/* Override nav a padding for the internal links only at mobile.
+		   1em top + 1em bottom + ~15px font ≈ 45px tap target. */
+		.internal-links a {
+			padding: 1em 0.65em;
+			font-size: 0.78em;
+			letter-spacing: 0.05em;
 		}
 	}
 </style>
