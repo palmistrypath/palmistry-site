@@ -159,6 +159,18 @@ Additional rules:
 
 ---
 
+### Gender and Tradition Framing
+
+Apply this standard case-by-case depending on article type:
+
+**In historical, foundational, or tradition-comparing content** (e.g., "What Palmistry Is", overview articles, tradition introductions): acknowledge classical practices honestly, including gendered conventions such as Chinese palmistry's traditional left/right hand distinction by gender. Frame these as historical practice that contemporary practitioners often approach differently. Be respectful of both the tradition and its evolution — don't dismiss the classical framing, but don't present it as current universal practice either.
+
+**In practical, line-by-line, mount-by-mount, or how-to content** (e.g., "How to Read a Palm", individual line articles, technique guides): default to contemporary inclusive framing. Use "active hand / passive hand" or "dominant / non-dominant hand" rather than gendered conventions. Don't relitigate the historical context in every practical article — assume the reader has access to the foundational articles for that background.
+
+**Exception — flag it when it changes the interpretation:** If a specific practical interpretation has meaningfully different traditional readings by gender, surface it explicitly. Don't strip out tradition where it actually changes the substance of an interpretation. The goal is not to sanitise traditions but to frame them appropriately for the context of each article.
+
+---
+
 ### Eventual Product Features (Long-Term Roadmap — Do Not Build Yet)
 
 These are directions, not current tasks. Nothing here should be built until the content base justifies it.
