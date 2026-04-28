@@ -171,6 +171,20 @@ Apply this standard case-by-case depending on article type:
 
 ---
 
+### Tradition references in practical articles
+
+When a non-default tradition (Chinese cosmological framing, Indian classical concepts, etc.) is structurally relevant to a topic, mention it accurately and move on. Don't expand it into a sub-section unless the article is specifically about that tradition. Two well-placed sentences that name a concept are more credible than a paragraph that explains it. Trust the reader to follow up if they want to.
+
+The principle: brevity is more respectful than overexplanation. A throwaway dismissal is disrespectful, but a brief, accurate, confident reference treats the tradition as a peer.
+
+**Examples in practice:**
+
+- *Tian Di Ren* in the Major Lines Overview is named as the Taoist cosmological framework Chinese palmistry uses to map the three principal lines, then the article moves on. It does not become a digression.
+- *Hasta Samudrika Shastra* is named and introduced in foundation articles where Indian palmistry is being presented as a tradition. In subsequent practical articles it is referenced briefly by name without re-explaining it each time.
+- Gendered hand-reading conventions (e.g., classical Chinese left/right distinction) are acknowledged honestly in historical or tradition-comparing content, then defaulted away from in practical articles without re-litigating the context each time.
+
+---
+
 ### Eventual Product Features (Long-Term Roadmap — Do Not Build Yet)
 
 These are directions, not current tasks. Nothing here should be built until the content base justifies it.
