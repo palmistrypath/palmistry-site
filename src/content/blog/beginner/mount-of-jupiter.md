@@ -1,6 +1,6 @@
 ---
 title: "The Mount of Jupiter"
-description: "A deep-dive into the Mount of Jupiter at the base of the index finger — its traditional associations with ambition, leadership, and spiritual authority, how its development is read, the Indian tradition's Guru Parvat, its role alongside the heart line and fate line, and where the most common myth about this mount gets the tradition exactly backwards."
+description: "What Jupiter's domain of leadership and ambition actually entails, how development is read, and why the tradition distinguishes natural authority from arrogance."
 pubDate: 2026-05-02
 ---
 

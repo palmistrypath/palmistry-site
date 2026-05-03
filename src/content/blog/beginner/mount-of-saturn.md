@@ -1,6 +1,6 @@
 ---
 title: "The Mount of Saturn"
-description: "A deep-dive into the Mount of Saturn at the base of the middle finger — its traditional associations with discipline, prudence, and the wisdom of solitude, how its development is read, the interpretive significance of the fate line's terminus, what the Indian tradition's Shani Parvat adds, and why the most persistent myth about this mount mistakes contemplation for morbidity."
+description: "What Saturn's domain of prudence, solitude, and depth actually means — and why the tradition reads a prominent mount as studious and disciplined, not morbid."
 pubDate: 2026-05-02
 ---
 

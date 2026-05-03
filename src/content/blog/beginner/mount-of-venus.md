@@ -1,6 +1,6 @@
 ---
 title: "The Mount of Venus"
-description: "A deep-dive into the largest mount on the palm — what the Mount of Venus is traditionally associated with, how its development is read, the interpretive relationship with the life line, what the Indian tradition adds, and why the most common myth about this mount gets the tradition exactly backwards."
+description: "What Venus's domain of vitality, warmth, and affection actually covers — and why the persistent myth about this mount gets the tradition exactly backwards."
 pubDate: 2026-05-02
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "The Mount of Mercury"
-description: "A deep-dive into the Mount of Mercury at the base of the little finger — its traditional associations with communication, wit, commercial intelligence, and adaptability, how its development is read including the overdeveloped form's specific associations with cunning and deception, the Mercury Line's independent relationship to this mount, what Budh Parvat adds from the Indian tradition, and why the mount's domain extends well beyond commercial salesmanship."
+description: "What Mercury's communication domain actually covers — from medicine to science to writing — and why the tradition reads far more than commercial salesmanship."
 pubDate: 2026-05-02
 ---
 

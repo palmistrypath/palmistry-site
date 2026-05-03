@@ -1,6 +1,6 @@
 ---
 title: "The Mount of Luna"
-description: "A deep-dive into the Mount of Luna on the lower outer palm — its traditional associations with imagination, intuition, receptivity, and the unconscious, the head line's relationship to Luna as one of Western palmistry's most discussed features, how its development is read including the overdeveloped form's associations with fantasy and instability, what Chandra Parvat adds from the Indian tradition, and the common myth that confuses imaginative sensitivity with psychic ability."
+description: "What the lower outer mount governs — imagination, intuition, and receptivity — and why a prominent Luna indicates imaginative depth, not psychic ability."
 pubDate: 2026-05-03
 ---
 

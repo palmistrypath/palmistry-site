@@ -1,6 +1,6 @@
 ---
 title: "The Mount of Apollo"
-description: "A deep-dive into the Mount of Apollo at the base of the ring finger — its traditional associations with aesthetic sensibility, creativity, warmth, and the desire for recognition, how its development is read, the Sun Line's terminal relationship to this mount, what the Indian tradition's Surya Parvat adds, and why the most persistent myth about Apollo mistakes refined taste for artistic production."
+description: "What Apollo's domain of beauty and creative warmth actually means — and why a prominent mount indicates aesthetic sensibility, not artistic ability."
 pubDate: 2026-05-02
 ---
 

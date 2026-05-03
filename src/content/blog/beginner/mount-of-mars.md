@@ -1,6 +1,6 @@
 ---
 title: "The Mount of Mars"
-description: "A deep-dive into the Mount of Mars — the only classical mount that exists as two distinct zones. Inner Mars (Active Mars, on the radial side between thumb and life line) governs physical courage, drive, and initiative; Outer Mars (Passive Mars, on the percussion side between heart line and Luna) governs moral courage, endurance, and resistance. The Plain of Mars connects them. Covers traditional associations from Cheiro, Benham, Gettings, and West; development readings for each zone separately; Mangal Parvat in the Indian tradition; Mars read alongside the life line and hand shape; and the persistent myth that a prominent Mars mount signals aggression or violence."
+description: "Mars is the only classical mount with two distinct zones. How Inner and Outer Mars read differently, and why a prominent mount signals courage rather than aggression."
 pubDate: 2026-05-03
 ---
 
