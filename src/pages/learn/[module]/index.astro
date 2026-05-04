@@ -1,0 +1,237 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import BaseHead from '../../../components/BaseHead.astro';
+import Footer from '../../../components/Footer.astro';
+import Header from '../../../components/Header.astro';
+import { MODULES, SITE_TITLE, type ModuleConfig } from '../../../consts';
+
+export async function getStaticPaths() {
+	const allLessons = await getCollection('lessons');
+	return MODULES.map((mod, i) => ({
+		params: { module: mod.slug },
+		props: {
+			mod,
+			lessons: allLessons
+				.filter((l) => l.data.module === mod.slug)
+				.sort((a, b) => a.data.order - b.data.order),
+			prevModule: i > 0 ? MODULES[i - 1] : null,
+			nextModule: i < MODULES.length - 1 ? MODULES[i + 1] : null,
+		},
+	}));
+}
+
+interface Props {
+	mod: ModuleConfig;
+	lessons: CollectionEntry<'lessons'>[];
+	prevModule: ModuleConfig | null;
+	nextModule: ModuleConfig | null;
+}
+
+const { mod, lessons, prevModule, nextModule } = Astro.props;
+
+function lessonHref(lesson: CollectionEntry<'lessons'>) {
+	const [, ...parts] = lesson.id.split('/');
+	return `/learn/${lesson.data.module}/${parts.join('/')}`;
+}
+
+const difficultyLabel: Record<string, string> = {
+	beginner: 'Beginner',
+	intermediate: 'Intermediate',
+	advanced: 'Advanced',
+};
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`${mod.title} — Learn — ${SITE_TITLE}`}
+			description={mod.description}
+		/>
+		<style>
+			.breadcrumb {
+				font-size: 0.78em;
+				color: var(--color-text-muted);
+				margin-bottom: 2em;
+				letter-spacing: 0.04em;
+			}
+			.breadcrumb a {
+				color: var(--color-text-muted);
+				text-decoration: none;
+			}
+			.breadcrumb a:hover {
+				color: var(--accent);
+			}
+			.module-header {
+				margin-bottom: 2.5em;
+			}
+			.module-header .difficulty {
+				font-family: var(--font-cinzel), serif;
+				font-size: 0.7em;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin: 0 0 0.4em;
+			}
+			.module-header h1 {
+				margin: 0 0 0.5em;
+			}
+			.module-header .description {
+				color: var(--color-text-muted);
+				font-size: 0.9em;
+				line-height: 1.7;
+				margin: 0;
+			}
+			.lesson-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				border-top: 1px solid rgba(201, 169, 110, 0.15);
+			}
+			.lesson-list li a {
+				display: flex;
+				align-items: baseline;
+				justify-content: space-between;
+				gap: 1.5rem;
+				padding: 1.2em 0;
+				border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+				text-decoration: none;
+				transition: 0.15s ease;
+			}
+			.lesson-list li a:hover {
+				padding-left: 0.5em;
+			}
+			.lesson-list li a:hover .lesson-title {
+				color: var(--accent);
+			}
+			.lesson-body {
+				flex: 1;
+				min-width: 0;
+			}
+			.lesson-number {
+				font-family: var(--font-cinzel), serif;
+				font-size: 0.68em;
+				letter-spacing: 0.1em;
+				color: var(--color-text-muted);
+				margin: 0 0 0.2em;
+			}
+			.lesson-title {
+				font-family: var(--font-cinzel), serif;
+				font-size: 0.95em;
+				color: var(--color-heading);
+				margin: 0 0 0.25em;
+				transition: color 0.15s ease;
+				line-height: 1.3;
+			}
+			.lesson-description {
+				font-size: 0.78em;
+				color: var(--color-text-muted);
+				margin: 0;
+				line-height: 1.5;
+			}
+			.lesson-meta {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				gap: 0.25em;
+				flex-shrink: 0;
+				font-size: 0.75em;
+				color: var(--color-text-muted);
+				font-family: var(--font-cinzel), serif;
+				letter-spacing: 0.06em;
+				white-space: nowrap;
+			}
+			.lesson-meta .badge-beginner { color: var(--accent); }
+			.lesson-meta .badge-intermediate { color: var(--color-text-muted); }
+			.lesson-meta .badge-advanced { color: var(--color-heading); }
+			.empty {
+				color: var(--color-text-muted);
+				font-style: italic;
+				padding: 2em 0;
+				text-align: center;
+			}
+			.module-nav {
+				display: flex;
+				justify-content: space-between;
+				margin-top: 3em;
+				padding-top: 2em;
+				border-top: 1px solid rgba(201, 169, 110, 0.15);
+				gap: 1rem;
+			}
+			.module-nav a {
+				font-family: var(--font-cinzel), serif;
+				font-size: 0.8em;
+				letter-spacing: 0.06em;
+				color: var(--color-text-muted);
+				text-decoration: none;
+				transition: color 0.15s ease;
+			}
+			.module-nav a:hover {
+				color: var(--accent);
+			}
+			.nav-next {
+				margin-left: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<nav class="breadcrumb" aria-label="Breadcrumb">
+				<a href="/learn">Learn</a>
+				{' › '}
+				<span>{mod.title}</span>
+			</nav>
+
+			<header class="module-header">
+				<p class="difficulty">{mod.difficulty}</p>
+				<h1>{mod.title}</h1>
+				<p class="description">{mod.description}</p>
+			</header>
+
+			{
+				lessons.length > 0 ? (
+					<ol class="lesson-list">
+						{lessons.map((lesson) => (
+							<li>
+								<a href={lessonHref(lesson)}>
+									<div class="lesson-body">
+										<p class="lesson-number">Lesson {lesson.data.order}</p>
+										<p class="lesson-title">{lesson.data.title}</p>
+										<p class="lesson-description">{lesson.data.description}</p>
+									</div>
+									<div class="lesson-meta">
+										<span class={`badge-${lesson.data.difficulty}`}>
+											{difficultyLabel[lesson.data.difficulty]}
+										</span>
+										<span>~{lesson.data.duration} min</span>
+									</div>
+								</a>
+							</li>
+						))}
+					</ol>
+				) : (
+					<p class="empty">Lessons for this module are coming soon.</p>
+				)
+			}
+
+			<nav class="module-nav" aria-label="Module navigation">
+				{
+					prevModule && (
+						<a href={`/learn/${prevModule.slug}`} class="nav-prev">
+							← {prevModule.title}
+						</a>
+					)
+				}
+				{
+					nextModule && (
+						<a href={`/learn/${nextModule.slug}`} class="nav-next">
+							{nextModule.title} →
+						</a>
+					)
+				}
+			</nav>
+		</main>
+		<Footer />
+	</body>
+</html>

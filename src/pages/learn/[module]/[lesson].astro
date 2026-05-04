@@ -1,0 +1,260 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import BaseHead from '../../../components/BaseHead.astro';
+import Footer from '../../../components/Footer.astro';
+import Header from '../../../components/Header.astro';
+import { MODULES, SITE_TITLE } from '../../../consts';
+
+interface LessonLink {
+	href: string;
+	title: string;
+}
+
+interface Props {
+	lesson: CollectionEntry<'lessons'>;
+	moduleTitle: string;
+	positionInModule: number;
+	totalInModule: number;
+	prevLesson: LessonLink | null;
+	nextLesson: LessonLink | null;
+}
+
+export async function getStaticPaths() {
+	const allLessons = await getCollection('lessons');
+
+	const sorted = [...allLessons].sort((a, b) => {
+		const modA = MODULES.findIndex((m) => m.slug === a.data.module);
+		const modB = MODULES.findIndex((m) => m.slug === b.data.module);
+		if (modA !== modB) return modA - modB;
+		return a.data.order - b.data.order;
+	});
+
+	function toLessonHref(l: CollectionEntry<'lessons'>) {
+		const [, ...parts] = l.id.split('/');
+		return `/learn/${l.data.module}/${parts.join('/')}`;
+	}
+
+	return sorted.map((lesson, i) => {
+		const [modulePart, ...slugParts] = lesson.id.split('/');
+		const moduleLessons = sorted.filter((l) => l.data.module === lesson.data.module);
+		const positionInModule = moduleLessons.findIndex((l) => l.id === lesson.id) + 1;
+
+		return {
+			params: { module: modulePart, lesson: slugParts.join('/') },
+			props: {
+				lesson,
+				moduleTitle: MODULES.find((m) => m.slug === modulePart)?.title ?? modulePart,
+				positionInModule,
+				totalInModule: moduleLessons.length,
+				prevLesson:
+					i > 0
+						? { href: toLessonHref(sorted[i - 1]), title: sorted[i - 1].data.title }
+						: null,
+				nextLesson:
+					i < sorted.length - 1
+						? { href: toLessonHref(sorted[i + 1]), title: sorted[i + 1].data.title }
+						: null,
+			},
+		};
+	});
+}
+
+const { lesson, moduleTitle, positionInModule, totalInModule, prevLesson, nextLesson } =
+	Astro.props;
+const { Content } = await render(lesson);
+
+const difficultyLabel: Record<string, string> = {
+	beginner: 'Beginner',
+	intermediate: 'Intermediate',
+	advanced: 'Advanced',
+};
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`${lesson.data.title} — ${SITE_TITLE}`}
+			description={lesson.data.description}
+		/>
+		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0 auto;
+			}
+			.prose {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 0 1em 2em;
+				color: var(--color-text);
+			}
+			.breadcrumb {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: 0 auto;
+				padding: 2em 1em 0;
+				font-size: 0.78em;
+				color: var(--color-text-muted);
+				letter-spacing: 0.04em;
+			}
+			.breadcrumb a {
+				color: var(--color-text-muted);
+				text-decoration: none;
+			}
+			.breadcrumb a:hover {
+				color: var(--accent);
+			}
+			.lesson-header {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: 1.5em auto 0;
+				padding: 0 1em;
+				text-align: center;
+			}
+			.lesson-position {
+				font-family: var(--font-cinzel), serif;
+				font-size: 0.68em;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--color-text-muted);
+				margin: 0 0 0.5em;
+			}
+			.lesson-header h1 {
+				margin: 0 0 0.5em;
+			}
+			.lesson-meta {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.6em;
+				font-family: var(--font-cinzel), serif;
+				font-size: 0.72em;
+				letter-spacing: 0.08em;
+				color: var(--color-text-muted);
+				margin-bottom: 1.5em;
+			}
+			.lesson-meta .sep {
+				opacity: 0.4;
+			}
+			.difficulty-beginner { color: var(--accent); }
+			.difficulty-intermediate { color: var(--color-text-muted); }
+			.difficulty-advanced { color: var(--color-heading); }
+			.lesson-header hr {
+				margin: 0 0 2em;
+			}
+			.related-article {
+				margin-top: 3em;
+				padding: 1.25em 1.5em;
+				border: 1px solid rgba(201, 169, 110, 0.25);
+				border-radius: 8px;
+				background: rgba(255, 255, 255, 0.02);
+				font-size: 0.88em;
+				color: var(--color-text-muted);
+			}
+			.related-article p {
+				margin: 0;
+			}
+			.lesson-nav {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: 3em auto 0;
+				padding: 2em 1em 3em;
+				display: flex;
+				justify-content: space-between;
+				gap: 1rem;
+				border-top: 1px solid rgba(201, 169, 110, 0.15);
+			}
+			.lesson-nav a {
+				display: flex;
+				flex-direction: column;
+				gap: 0.2em;
+				text-decoration: none;
+				max-width: 45%;
+			}
+			.nav-label {
+				font-family: var(--font-cinzel), serif;
+				font-size: 0.65em;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--color-text-muted);
+			}
+			.nav-title {
+				font-size: 0.82em;
+				color: var(--accent);
+				line-height: 1.35;
+				transition: color 0.15s ease;
+			}
+			.lesson-nav a:hover .nav-title {
+				color: var(--accent-light);
+			}
+			.nav-next {
+				text-align: right;
+				margin-left: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<nav class="breadcrumb" aria-label="Breadcrumb">
+				<a href="/learn">Learn</a>
+				{' › '}
+				<a href={`/learn/${lesson.data.module}`}>{moduleTitle}</a>
+				{' › '}
+				<span>{lesson.data.title}</span>
+			</nav>
+
+			<div class="lesson-header">
+				<p class="lesson-position">
+					Lesson {positionInModule} of {totalInModule} in {moduleTitle}
+				</p>
+				<h1>{lesson.data.title}</h1>
+				<div class="lesson-meta">
+					<span class={`difficulty-${lesson.data.difficulty}`}>
+						{difficultyLabel[lesson.data.difficulty]}
+					</span>
+					<span class="sep" aria-hidden="true">·</span>
+					<span>~{lesson.data.duration} min</span>
+				</div>
+				<hr />
+			</div>
+
+			<article class="prose">
+				<Content />
+				{
+					lesson.data.relatedArticle && (
+						<aside class="related-article">
+							<p>
+								Want more depth?{' '}
+								<a href={`/blog/${lesson.data.relatedArticle}/`}>Read the full article →</a>
+							</p>
+						</aside>
+					)
+				}
+			</article>
+		</main>
+
+		<nav class="lesson-nav" aria-label="Lesson navigation">
+			{
+				prevLesson && (
+					<a href={prevLesson.href} class="nav-prev">
+						<span class="nav-label">Previous</span>
+						<span class="nav-title">← {prevLesson.title}</span>
+					</a>
+				)
+			}
+			{
+				nextLesson && (
+					<a href={nextLesson.href} class="nav-next">
+						<span class="nav-label">Next</span>
+						<span class="nav-title">{nextLesson.title} →</span>
+					</a>
+				)
+			}
+		</nav>
+
+		<Footer />
+	</body>
+</html>
