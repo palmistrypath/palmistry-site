@@ -16,17 +16,17 @@ const { src, alt, caption } = Astro.props;
 	figure {
 		margin: 2em 0;
 		padding: 0;
+		overflow: hidden;
 		background-color: #0d0a1a;
 		line-height: 0;
-		overflow: hidden;
 	}
 	figure > img {
 		display: block;
-		max-width: 100%;
+		width: calc(100% + 2px);
+		max-width: none;
 		height: auto;
+		margin: -1px;
 		border-radius: 0 !important;
-		margin: 0 auto;
-		transform: translateZ(0);
 	}
 	figure > figcaption {
 		display: block;
