@@ -16,22 +16,23 @@ const { src, alt, caption } = Astro.props;
 	figure {
 		margin: 2em 0;
 		padding: 0;
-		text-align: center;
 		background-color: #0d0a1a;
-		overflow: hidden;
+		line-height: 0;
 	}
-	img {
+	figure > img {
 		display: block;
 		max-width: 100%;
 		height: auto;
 		border-radius: 0 !important;
 		margin: 0 auto;
-		vertical-align: bottom;
 	}
-	figcaption {
+	figure > figcaption {
+		display: block;
 		margin-top: 0.75em;
 		font-size: 0.8em;
 		color: var(--color-text-muted);
 		font-style: italic;
+		line-height: 1.5;
+		text-align: center;
 	}
 </style>
