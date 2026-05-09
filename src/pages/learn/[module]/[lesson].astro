@@ -3,11 +3,20 @@ import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BaseHead from '../../../components/BaseHead.astro';
 import Footer from '../../../components/Footer.astro';
 import Header from '../../../components/Header.astro';
+import LessonFooter from '../../../components/LessonFooter.astro';
+import LessonPath from '../../../components/LessonPath.astro';
 import { MODULES, SITE_TITLE } from '../../../consts';
+
+interface ModuleLessonStep {
+	href: string;
+	title: string;
+	order: number;
+}
 
 interface LessonLink {
 	href: string;
 	title: string;
+	description?: string;
 }
 
 interface Props {
@@ -17,6 +26,7 @@ interface Props {
 	totalInModule: number;
 	prevLesson: LessonLink | null;
 	nextLesson: LessonLink | null;
+	moduleLessons: ModuleLessonStep[];
 }
 
 export async function getStaticPaths() {
@@ -36,8 +46,14 @@ export async function getStaticPaths() {
 
 	return sorted.map((lesson, i) => {
 		const [modulePart, ...slugParts] = lesson.id.split('/');
-		const moduleLessons = sorted.filter((l) => l.data.module === lesson.data.module);
-		const positionInModule = moduleLessons.findIndex((l) => l.id === lesson.id) + 1;
+		const moduleEntries = sorted.filter((l) => l.data.module === lesson.data.module);
+		const positionInModule = moduleEntries.findIndex((l) => l.id === lesson.id) + 1;
+
+		const moduleLessons: ModuleLessonStep[] = moduleEntries.map((l) => ({
+			href: toLessonHref(l),
+			title: l.data.title,
+			order: l.data.order,
+		}));
 
 		return {
 			params: { module: modulePart, lesson: slugParts.join('/') },
@@ -45,21 +61,29 @@ export async function getStaticPaths() {
 				lesson,
 				moduleTitle: MODULES.find((m) => m.slug === modulePart)?.title ?? modulePart,
 				positionInModule,
-				totalInModule: moduleLessons.length,
+				totalInModule: moduleEntries.length,
+				moduleLessons,
 				prevLesson:
 					i > 0
-						? { href: toLessonHref(sorted[i - 1]), title: sorted[i - 1].data.title }
+						? {
+								href: toLessonHref(sorted[i - 1]),
+								title: sorted[i - 1].data.title,
+							}
 						: null,
 				nextLesson:
 					i < sorted.length - 1
-						? { href: toLessonHref(sorted[i + 1]), title: sorted[i + 1].data.title }
+						? {
+								href: toLessonHref(sorted[i + 1]),
+								title: sorted[i + 1].data.title,
+								description: sorted[i + 1].data.description,
+							}
 						: null,
 			},
 		};
 	});
 }
 
-const { lesson, moduleTitle, positionInModule, totalInModule, prevLesson, nextLesson } =
+const { lesson, moduleTitle, positionInModule, totalInModule, prevLesson, nextLesson, moduleLessons } =
 	Astro.props;
 const { Content } = await render(lesson);
 
@@ -138,9 +162,15 @@ const difficultyLabel: Record<string, string> = {
 			.lesson-meta .sep {
 				opacity: 0.4;
 			}
-			.difficulty-beginner { color: var(--accent); }
-			.difficulty-intermediate { color: var(--color-text-muted); }
-			.difficulty-advanced { color: var(--color-heading); }
+			.difficulty-beginner {
+				color: var(--accent);
+			}
+			.difficulty-intermediate {
+				color: var(--color-text-muted);
+			}
+			.difficulty-advanced {
+				color: var(--color-heading);
+			}
 			.lesson-header hr {
 				margin: 0 0 2em;
 			}
@@ -155,43 +185,6 @@ const difficultyLabel: Record<string, string> = {
 			}
 			.related-article p {
 				margin: 0;
-			}
-			.lesson-nav {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: 3em auto 0;
-				padding: 2em 1em 3em;
-				display: flex;
-				justify-content: space-between;
-				gap: 1rem;
-				border-top: 1px solid rgba(201, 169, 110, 0.15);
-			}
-			.lesson-nav a {
-				display: flex;
-				flex-direction: column;
-				gap: 0.2em;
-				text-decoration: none;
-				max-width: 45%;
-			}
-			.nav-label {
-				font-family: var(--font-cinzel), serif;
-				font-size: 0.65em;
-				letter-spacing: 0.12em;
-				text-transform: uppercase;
-				color: var(--color-text-muted);
-			}
-			.nav-title {
-				font-size: 0.82em;
-				color: var(--accent);
-				line-height: 1.35;
-				transition: color 0.15s ease;
-			}
-			.lesson-nav a:hover .nav-title {
-				color: var(--accent-light);
-			}
-			.nav-next {
-				text-align: right;
-				margin-left: auto;
 			}
 		</style>
 	</head>
@@ -221,6 +214,13 @@ const difficultyLabel: Record<string, string> = {
 				<hr />
 			</div>
 
+			<LessonPath
+				steps={moduleLessons}
+				currentOrder={positionInModule}
+				moduleTitle={moduleTitle}
+				moduleSlug={lesson.data.module}
+			/>
+
 			<article class="prose">
 				<Content />
 				{
@@ -236,24 +236,7 @@ const difficultyLabel: Record<string, string> = {
 			</article>
 		</main>
 
-		<nav class="lesson-nav" aria-label="Lesson navigation">
-			{
-				prevLesson && (
-					<a href={prevLesson.href} class="nav-prev">
-						<span class="nav-label">Previous</span>
-						<span class="nav-title">← {prevLesson.title}</span>
-					</a>
-				)
-			}
-			{
-				nextLesson && (
-					<a href={nextLesson.href} class="nav-next">
-						<span class="nav-label">Next</span>
-						<span class="nav-title">{nextLesson.title} →</span>
-					</a>
-				)
-			}
-		</nav>
+		<LessonFooter prevLesson={prevLesson} nextLesson={nextLesson} />
 
 		<Footer />
 	</body>

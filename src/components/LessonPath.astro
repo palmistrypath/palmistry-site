@@ -1,0 +1,213 @@
+---
+interface Step {
+	href: string;
+	title: string;
+	order: number;
+}
+
+interface Props {
+	steps: Step[];
+	currentOrder: number;
+	moduleTitle: string;
+	moduleSlug: string;
+}
+
+const { steps, currentOrder, moduleTitle, moduleSlug } = Astro.props;
+const total = steps.length;
+
+// Fill ends at the centre of the current pip.
+// space-between places pip centres at intervals of (W-16)/(N-1) across the track.
+const trackFillPct = total > 1 ? ((currentOrder - 1) / (total - 1)) * 100 : 0;
+---
+
+<div class="lesson-path">
+	<p class="path-label">
+		<a href={`/learn/${moduleSlug}`} class="module-link">{moduleTitle}</a>
+		<span class="sep" aria-hidden="true">·</span>
+		<span>Lesson {currentOrder} of {total}</span>
+	</p>
+
+	<div
+		class="rail"
+		role="group"
+		aria-label={`Progress: lesson ${currentOrder} of ${total}`}
+	>
+		<!-- Track sits behind pips; left/right = 8px = half pip-container width -->
+		<div class="track" aria-hidden="true">
+			<div class="track-fill" style={`width: ${trackFillPct}%`}></div>
+		</div>
+
+		<ol class="pips" aria-label="Lesson sequence">
+			{
+				steps.map((step) => {
+					const isCurrent = step.order === currentOrder;
+					const isDone = step.order < currentOrder;
+					return (
+						<li
+							class:list={['pip', { 'pip--done': isDone, 'pip--current': isCurrent }]}
+						>
+							{isCurrent ? (
+								<span
+									class="pip-dot"
+									aria-current="step"
+									aria-label={`Current lesson: ${step.title}`}
+								></span>
+							) : (
+								<a
+									class="pip-dot"
+									href={step.href}
+									aria-label={step.title}
+									title={step.title}
+								></a>
+							)}
+						</li>
+					);
+				})
+			}
+		</ol>
+	</div>
+</div>
+
+<style>
+	/* ── Container ────────────────────────────────────────────────── */
+	.lesson-path {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: 0 auto 2em;
+		padding: 1.5em 1em 0;
+		text-align: center;
+	}
+
+	/* ── Label ────────────────────────────────────────────────────── */
+	.path-label {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.55em;
+		font-family: var(--font-cinzel), serif;
+		font-size: 0.56em;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+		margin: 0 0 1em;
+		opacity: 0.65;
+	}
+
+	.module-link {
+		color: inherit;
+		text-decoration: none;
+		transition:
+			color 0.2s,
+			opacity 0.2s;
+	}
+	.module-link:hover {
+		color: var(--accent);
+		opacity: 1;
+	}
+
+	.sep {
+		opacity: 0.4;
+	}
+
+	/* ── Rail ─────────────────────────────────────────────────────── */
+	.rail {
+		position: relative;
+		padding: 0.6em 0;
+	}
+
+	/* Track line: offset 8px each side so it runs pip-centre to pip-centre */
+	.track {
+		position: absolute;
+		top: 50%;
+		left: 8px;
+		right: 8px;
+		height: 1px;
+		background: rgba(201, 169, 110, 0.1);
+		transform: translateY(-50%);
+		pointer-events: none;
+	}
+
+	.track-fill {
+		position: absolute;
+		inset: 0 auto 0 0;
+		background: rgba(201, 169, 110, 0.28);
+		transition: width 0.5s ease;
+	}
+
+	/* ── Pips ─────────────────────────────────────────────────────── */
+	.pips {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		position: relative;
+		z-index: 1;
+	}
+
+	/* 16px wrapper gives generous tap target; visual dot lives inside via pip-dot */
+	.pip {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 16px;
+		height: 16px;
+	}
+
+	.pip-dot {
+		display: block;
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		text-decoration: none;
+		transition:
+			background 0.2s,
+			border-color 0.2s,
+			box-shadow 0.2s;
+	}
+
+	/* Upcoming (default) */
+	.pip .pip-dot {
+		border: 1px solid rgba(201, 169, 110, 0.22);
+		background: transparent;
+	}
+
+	/* Done */
+	.pip--done .pip-dot {
+		border-color: transparent;
+		background: rgba(201, 169, 110, 0.28);
+	}
+
+	/* Current */
+	.pip--current .pip-dot {
+		width: 9px;
+		height: 9px;
+		border-color: transparent;
+		background: var(--accent);
+		box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.13);
+		cursor: default;
+	}
+
+	/* Hover: upcoming */
+	.pip:not(.pip--current) a.pip-dot:hover {
+		border-color: rgba(201, 169, 110, 0.55);
+		background: rgba(201, 169, 110, 0.1);
+	}
+
+	/* Hover: done */
+	.pip--done a.pip-dot:hover {
+		background: rgba(201, 169, 110, 0.5);
+	}
+
+	/* ── Mobile ───────────────────────────────────────────────────── */
+	@media (max-width: 480px) {
+		.lesson-path {
+			padding-top: 1.25em;
+			margin-bottom: 1.5em;
+		}
+		.path-label {
+			margin-bottom: 0.85em;
+		}
+	}
+</style>
