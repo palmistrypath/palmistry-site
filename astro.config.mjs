@@ -2,12 +2,13 @@
 
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import pagefind from 'astro-pagefind';
 import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://palmistrypath.com',
-	integrations: [mdx(), sitemap()],
+	integrations: [mdx(), sitemap(), pagefind()],
 	fonts: [
 		{
 			provider: fontProviders.google(),

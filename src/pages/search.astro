@@ -1,0 +1,45 @@
+---
+import Search from 'astro-pagefind/components/Search';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Search — ${SITE_TITLE}`} description="Search Palmistry Path articles." />
+		<style>
+			.search-wrap {
+				max-width: 680px;
+				margin: 0 auto;
+				padding: 3em 1em;
+			}
+			h1 {
+				text-align: center;
+				margin-bottom: 1.25em;
+			}
+
+			/* Pagefind UI theming */
+			.search-wrap {
+				--pagefind-ui-primary: #c9a96e;
+				--pagefind-ui-text: #e2d9c5;
+				--pagefind-ui-background: #0d0a1a;
+				--pagefind-ui-border: rgba(201, 169, 110, 0.2);
+				--pagefind-ui-tag: #1a1430;
+				--pagefind-ui-font: var(--font-lora), serif;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="search-wrap">
+				<h1>Search</h1>
+				<Search />
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
