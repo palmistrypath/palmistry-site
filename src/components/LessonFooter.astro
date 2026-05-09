@@ -58,6 +58,15 @@ const { prevLesson, nextLesson } = Astro.props;
 			<p class="email-body">
 				A printable quick-reference guide to the major lines, mounts, and hand shapes.
 			</p>
+			<div class="includes" aria-label="Guide contents">
+				<p class="includes-label">Includes</p>
+				<ul class="includes-list">
+					<li>Major lines quick-reference map</li>
+					<li>Mount meanings overview</li>
+					<li>Hand shape guide</li>
+					<li>Printable study sheet</li>
+				</ul>
+			</div>
 			<a href="/guide" class="btn-guide">Get the Free Guide</a>
 		</div>
 	</aside>
@@ -183,13 +192,53 @@ const { prevLesson, nextLesson } = Astro.props;
 		font-size: 0.83em;
 		color: var(--color-text-muted);
 		max-width: 400px;
-		margin: 0 auto 1.5em;
+		margin: 0 auto 1em;
 		line-height: 1.75;
 	}
+
+	/* ── Includes list ── */
+	.includes {
+		margin: 0 auto 1.6em;
+		max-width: 260px;
+		text-align: left;
+	}
+	.includes-label {
+		font-family: var(--font-cinzel), serif;
+		font-size: 0.57em;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+		opacity: 0.5;
+		margin: 0 0 0.6em;
+	}
+	.includes-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.28em;
+	}
+	.includes-list li {
+		font-size: 0.76em;
+		color: var(--color-text-muted);
+		opacity: 0.72;
+		padding-left: 0.9em;
+		position: relative;
+		line-height: 1.5;
+	}
+	.includes-list li::before {
+		content: '·';
+		position: absolute;
+		left: 0;
+		color: var(--accent);
+		opacity: 0.4;
+	}
+
 	.btn-guide {
 		display: inline-block;
 		padding: 0.65em 1.65em;
-		border: 1px solid rgba(201, 169, 110, 0.45);
+		border: 1px solid rgba(201, 169, 110, 0.4);
 		color: var(--accent);
 		font-family: var(--font-cinzel), serif;
 		font-size: 0.68em;
@@ -197,12 +246,17 @@ const { prevLesson, nextLesson } = Astro.props;
 		text-transform: uppercase;
 		text-decoration: none;
 		border-radius: 4px;
-		transition: 0.15s ease;
+		transition:
+			border-color 0.25s ease,
+			background 0.25s ease,
+			color 0.25s ease,
+			box-shadow 0.25s ease;
 	}
 	.btn-guide:hover {
-		border-color: var(--accent);
-		background: rgba(201, 169, 110, 0.08);
+		border-color: rgba(201, 169, 110, 0.65);
+		background: rgba(201, 169, 110, 0.07);
 		color: var(--accent-light);
+		box-shadow: 0 0 18px rgba(201, 169, 110, 0.1);
 	}
 
 	@media (max-width: 480px) {
